@@ -67,8 +67,8 @@ const (
 	SRC_LINEAR              = C.SRC_LINEAR
 )
 
-//New initializes the converter object and returns a reference to it.
-func New(converterType int, channels int, bufferLen int) (*Src, error) {
+//Make initializes the converter object and returns a reference to it.
+func Make(converterType int, channels int, bufferLen int) (*Src, error) {
 	cConverter := C.int(converterType)
 	cChannels := C.int(channels)
 	var cErr *C.int
@@ -269,7 +269,7 @@ func Int16ToFloatArray(in []int16, out []float32) error {
 	inPtr := &(in[0])
 	outPtr := &(out[0])
 
-	if inLen, outLen := len(in), len(out); inLen!=outLen {
+	if inLen, outLen := len(in), len(out); inLen != outLen {
 		return fmt.Errorf("in (%d) not equal in length of out (%d)", inLen, outLen)
 	} else {
 		C.src_short_to_float_array((*C.short)(inPtr), (*C.float)(outPtr), C.int(inLen))
@@ -284,10 +284,10 @@ func Int16ByteToFloatArray(in []byte, out []float32) error {
 	inPtr := &(in[0])
 	outPtr := &(out[0])
 
-	if inLen := len(in); inLen % 2 != 0 {
+	if inLen := len(in); inLen%2 != 0 {
 		return fmt.Errorf("in (%d) not multiple of 2", inLen)
 	}
-	if inLen, outLen := len(in)/2, len(out); inLen!=outLen {
+	if inLen, outLen := len(in)/2, len(out); inLen != outLen {
 		return fmt.Errorf("in (%d) not equal in length of out (%d)", inLen, outLen)
 	} else {
 		C.src_short_byte_to_float_array((*C.uchar)(inPtr), (*C.float)(outPtr), C.int(inLen))
@@ -295,13 +295,12 @@ func Int16ByteToFloatArray(in []byte, out []float32) error {
 	}
 }
 
-
 // FloatToInt16Array converts an slice of floats to int16. Both slices must be pre-allocated and equal in size
 func FloatToInt16Array(in []float32, out []int16) error {
 	inPtr := &(in[0])
 	outPtr := &(out[0])
 
-	if inLen, outLen := len(in), len(out); inLen!=outLen {
+	if inLen, outLen := len(in), len(out); inLen != outLen {
 		return fmt.Errorf("in (%d) not equal in length of out (%d)", inLen, outLen)
 	} else {
 		C.src_float_to_short_array((*C.float)(inPtr), (*C.short)(outPtr), C.int(inLen))

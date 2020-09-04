@@ -300,7 +300,7 @@ func TestErrors(t *testing.T) {
 func TestFloatToInt16Array(t *testing.T) {
 	input := []float32{-1.0, 1.0}
 	output := make([]int16, 2)
-	if err := FloatToInt16Array(input,output); err != nil {
+	if err := FloatToInt16Array(input, output); err != nil {
 		t.Fatalf("did not expect failure: %v", err)
 	}
 	if output[0] != -32768 {
@@ -314,13 +314,13 @@ func TestFloatToInt16Array(t *testing.T) {
 func TestInt16ToFloatArray(t *testing.T) {
 	input := []int16{-32768, 32767}
 	output := make([]float32, 2)
-	if err := Int16ToFloatArray(input,output); err != nil {
+	if err := Int16ToFloatArray(input, output); err != nil {
 		t.Fatalf("did not expect failure: %v", err)
 	}
 	if math.Abs(float64(output[0] - -1.0)) > 0.0001 {
 		t.Fatalf("did not expect -32768 to map to %v", output[0])
 	}
-	if math.Abs(float64(output[1] - 1.0)) > 0.0001 {
+	if math.Abs(float64(output[1]-1.0)) > 0.0001 {
 		t.Fatalf("did not expect  32767 to map to %v", output[1])
 	}
 }
@@ -328,13 +328,13 @@ func TestInt16ToFloatArray(t *testing.T) {
 func TestInt16ByteToFloatArray(t *testing.T) {
 	input := []byte{0x00, 0x80, 0xFF, 0x7F}
 	output := make([]float32, 2)
-	if err := Int16ByteToFloatArray(input,output); err != nil {
+	if err := Int16ByteToFloatArray(input, output); err != nil {
 		t.Fatalf("did not expect failure: %v", err)
 	}
 	if math.Abs(float64(output[0] - -1.0)) > 0.0001 {
 		t.Fatalf("did not expect -32768 to map to %v", output[0])
 	}
-	if math.Abs(float64(output[1] - 1.0)) > 0.0001 {
+	if math.Abs(float64(output[1]-1.0)) > 0.0001 {
 		t.Fatalf("did not expect  32767 to map to %v", output[1])
 	}
 }
