@@ -68,14 +68,14 @@ const (
 )
 
 //New initializes the converter object and returns a reference to it.
-func New(converterType int, channels int, bufferLen int) (Src, error) {
+func New(converterType int, channels int, bufferLen int) (*Src, error) {
 	cConverter := C.int(converterType)
 	cChannels := C.int(channels)
 	var cErr *C.int
 
 	src_state := C.src_new(cConverter, cChannels, cErr)
 	if src_state == nil {
-		return Src{}, errors.New("Could not initialize samplerate converter object")
+		return nil, errors.New("Could not initialize samplerate converter object")
 	}
 
 	inputBuffer := make([]C.float, bufferLen)
@@ -96,11 +96,11 @@ func New(converterType int, channels int, bufferLen int) (Src, error) {
 		outputBuffer: outputBuffer,
 	}
 
-	return src, nil
+	return &src, nil
 }
 
 // Delete cleans up all internal allocations.
-func Delete(src Src) error {
+func Delete(src *Src) error {
 	srcState := C.src_delete(src.srcState)
 	C.free_src_data(src.srcData)
 	if srcState == nil {
