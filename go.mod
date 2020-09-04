@@ -1,3 +1,3 @@
-module github.com/dh1tw/gosamplerate
+module github.com/dsonck92/gosamplerate
 
 go 1.14

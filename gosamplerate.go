@@ -38,6 +38,9 @@ int run_src_simple(float *data_in, float *data_out,
     return res;
 }
 
+void src_short_byte_to_float_array(unsigned char *data_in, float *data_out, int len) {
+	src_short_to_float_array((short*)data_in, data_out, len);
+}
 */
 import "C"
 
@@ -259,4 +262,49 @@ func GetVersion() string {
 
 	cVersion := C.src_get_version()
 	return C.GoString(cVersion)
+}
+
+// Int16ToFloatArray converts an slice of int16 to float32. Both slices must be pre-allocated and of equal size
+func Int16ToFloatArray(in []int16, out []float32) error {
+	inPtr := &(in[0])
+	outPtr := &(out[0])
+
+	if inLen, outLen := len(in), len(out); inLen!=outLen {
+		return fmt.Errorf("in (%d) not equal in length of out (%d)", inLen, outLen)
+	} else {
+		C.src_short_to_float_array((*C.short)(inPtr), (*C.float)(outPtr), C.int(inLen))
+		return nil
+	}
+}
+
+// Int16ByteToFloatArray converts an slice of bytes representing int16 to float32. Both slices must be pre-allocated
+// and in must be twice the size of out. This can be used to process audio buffers in byte form that represent 16 bit
+// audio without having to do dangerous casts in Go
+func Int16ByteToFloatArray(in []byte, out []float32) error {
+	inPtr := &(in[0])
+	outPtr := &(out[0])
+
+	if inLen := len(in); inLen % 2 != 0 {
+		return fmt.Errorf("in (%d) not multiple of 2", inLen)
+	}
+	if inLen, outLen := len(in)/2, len(out); inLen!=outLen {
+		return fmt.Errorf("in (%d) not equal in length of out (%d)", inLen, outLen)
+	} else {
+		C.src_short_byte_to_float_array((*C.uchar)(inPtr), (*C.float)(outPtr), C.int(inLen))
+		return nil
+	}
+}
+
+
+// FloatToInt16Array converts an slice of floats to int16. Both slices must be pre-allocated and equal in size
+func FloatToInt16Array(in []float32, out []int16) error {
+	inPtr := &(in[0])
+	outPtr := &(out[0])
+
+	if inLen, outLen := len(in), len(out); inLen!=outLen {
+		return fmt.Errorf("in (%d) not equal in length of out (%d)", inLen, outLen)
+	} else {
+		C.src_float_to_short_array((*C.float)(inPtr), (*C.short)(outPtr), C.int(inLen))
+		return nil
+	}
 }
