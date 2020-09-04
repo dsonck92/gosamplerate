@@ -60,10 +60,15 @@ type Src struct {
 }
 
 const (
+	/* Highest quality sinc interpolation resampling method offering a SNR of 97 dB at 97% bandwidth */
 	SRC_SINC_BEST_QUALITY   = C.SRC_SINC_BEST_QUALITY
+	/* Medium quality sinc interpolation resampling method offering a SNR of 97 dB at 90% bandwidth */
 	SRC_SINC_MEDIUM_QUALITY = C.SRC_SINC_MEDIUM_QUALITY
+	/* Low quality sinc interpolation resampling method offering a SNR of 97 dB at 80% bandwidth */
 	SRC_SINC_FASTEST        = C.SRC_SINC_FASTEST
+	/* A Zero Order Hold converter (interpolated value is equal to the last value). The quality is poor but speed is high */
 	SRC_ZERO_ORDER_HOLD     = C.SRC_ZERO_ORDER_HOLD
+	/* A linear converter. The quality is poor but the speed is high */
 	SRC_LINEAR              = C.SRC_LINEAR
 )
 
