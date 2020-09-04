@@ -56,7 +56,7 @@ func TestGetVersion(t *testing.T) {
 
 func TestInitAndDestroy(t *testing.T) {
 	channels := 2
-	src, err := New(SRC_SINC_FASTEST, channels, 100)
+	src, err := Make(SRC_SINC_FASTEST, channels, 100)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -81,7 +81,7 @@ func TestInitAndDestroy(t *testing.T) {
 }
 
 func TestInvalidSrcObject(t *testing.T) {
-	_, err := New(5, 2, 100)
+	_, err := Make(5, 2, 100)
 	if err == nil {
 		t.Fatal("expected Error")
 	}
@@ -141,7 +141,7 @@ func TestSimpleError(t *testing.T) {
 }
 
 func TestProcess(t *testing.T) {
-	src, err := New(SRC_LINEAR, 2, 100)
+	src, err := Make(SRC_LINEAR, 2, 100)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -166,7 +166,7 @@ func TestProcess(t *testing.T) {
 }
 
 func TestProcessWithEndOfInputFlagSet(t *testing.T) {
-	src, err := New(SRC_SINC_FASTEST, 2, 100)
+	src, err := Make(SRC_SINC_FASTEST, 2, 100)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -193,7 +193,7 @@ func TestProcessWithEndOfInputFlagSet(t *testing.T) {
 }
 
 func TestProcessDataSliceBiggerThanInputBuffer(t *testing.T) {
-	src, err := New(SRC_LINEAR, 1, 100)
+	src, err := Make(SRC_LINEAR, 1, 100)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -209,7 +209,7 @@ func TestProcessDataSliceBiggerThanInputBuffer(t *testing.T) {
 }
 
 func TestProcessErrorWithInvalidRatio(t *testing.T) {
-	src, err := New(SRC_LINEAR, 1, 100)
+	src, err := Make(SRC_LINEAR, 1, 100)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -227,7 +227,7 @@ func TestProcessErrorWithInvalidRatio(t *testing.T) {
 
 func TestGetChannels(t *testing.T) {
 	channels := 2
-	src, err := New(SRC_SINC_FASTEST, channels, 100)
+	src, err := Make(SRC_SINC_FASTEST, channels, 100)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -240,7 +240,7 @@ func TestGetChannels(t *testing.T) {
 }
 
 func TestSetRatio(t *testing.T) {
-	src, err := New(SRC_LINEAR, 1, 10)
+	src, err := Make(SRC_LINEAR, 1, 10)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -250,7 +250,7 @@ func TestSetRatio(t *testing.T) {
 }
 
 func TestSetRatioInvalid(t *testing.T) {
-	src, err := New(SRC_LINEAR, 1, 10)
+	src, err := Make(SRC_LINEAR, 1, 10)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -276,7 +276,7 @@ func TestIsValidRatio(t *testing.T) {
 
 func TestErrors(t *testing.T) {
 	channels := 2
-	src, err := New(SRC_SINC_FASTEST, channels, 100)
+	src, err := Make(SRC_SINC_FASTEST, channels, 100)
 	if err != nil {
 		t.Fatal(err)
 	}
