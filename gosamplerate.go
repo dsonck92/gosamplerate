@@ -198,6 +198,8 @@ func (src *Src) Process(dataIn []float32, ratio float64, endOfInput bool) ([]flo
 	}
 
 	src.srcData.input_frames = C.long(inputLength) / src.channels
+	src.srcData.data_in = (*C.float)(&src.inputBuffer[0])
+	src.srcData.data_out = (*C.float)(&src.outputBuffer[0])
 	src.srcData.end_of_input = cEndOfInput
 	src.srcData.src_ratio = C.double(ratio)
 
